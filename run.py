@@ -122,6 +122,70 @@ def make_guess(board):
     #Returnes the status of the guessed coordinate
     return guess
 
+def play_game(computer_board, player_board):
+    """Prints the player and computers board and counts the scores
+    Allows the user to keep the control of the game.
+    """
+    #Prints blank initial boardes with no guess coordinates marked
+    print(f"{player_board.name.capitalize()}'s Board: ")
+    player_board.print()
+    print("Computer's Board: ")
+    computer_board.print()
+    play = 'yes'
+    #Continues the game until the user wants to quit
+    while play.lower() != 'n':
+        c = make_guess(player_board)
+        p = make_guess(computer_board)
+        # print(player_board.guesses)
+        # print(computer_board.guesses)
+        # while c[1] in player_board.guesses or p[1] in computer_board.guesses:
+        #     print('You have guessed this spot before!!!')
+        #     c = make_guess(player_board)
+        #     p = make_guess(computer_board)
+        print(f"{player_board.name.capitalize()}'s Board: ")
+        player_board.print()
+        print("Computer's Board: ")
+        computer_board.print()
+        print("-"*35)
+        #Prints the coordinates guessed by both the computer
+        #and the player
+        print(f'Computer guessed:{c[1]}')
+        print(f"Computer's guess was a {c[0]}")
+        print(f'{player_board.name.capitalize()} guessed:{p[1]}')
+        print(f"{player_board.name.capitalize()}'s guess was a {p[0]}")
+        #Counts the player and the computer's scores
+        if c[0] == 'Hit' and p[0] == "Hit":
+            scores["computer"] += 1
+            scores["player"] += 1
+        elif p[0] == "Hit":
+            scores['player'] += 1
+        elif c[0] == "Hit":
+            scores['computer'] += 1
+        #prints scores after each round
+        print(
+            f"Computer's score:{scores['computer']}, {player_board.name.capitalize()}'s score:{scores['player']}")
+        print("-"*35)
+        #Checks whether one of the players have found all the 
+        #ships or not
+        if scores["player"] == player_board.num_ships or scores['computer'] == computer_board.num_ships:
+            break
+        else:
+            print('Do you want to continue?')
+            print("Press any key to continue or N to quit")
+            play = input('')
+        #Decides about the winner of the game
+    if scores['computer'] == computer_board.num_ships:
+        print("The winner is computer!!!")
+        print(
+            f"Computer's score:{scores['computer']}, {player_board.name.capitalize()}'s score:{scores['player']}")
+    elif scores['player'] == player_board.num_ships:
+        print(f"The winner is  {player_board.name.capitalize()}!!!")
+        print(f"Computer's score:{scores['computer']}, {player_board.name.capitalize()}'s score:{scores['player']}")
+    else:
+        print("You Quited the game...")
+        print(f"Here are the scores, Computer's score:{scores['computer']}, {player_board.name.capitalize()}'s score:{scores['player']}")
+# Most of this function's code credit is going
+#  to the Code Insititute's Portfolio Project 3 Scope
 
 def new_game():
     """Starts a new game, Sets the board size and number of ships, resets the
@@ -151,4 +215,4 @@ def new_game():
     for _ in range(ship_num):
         populate_board(player_board)
         populate_board(computer_board)
-    
+    play_game(computer_board, player_board)
