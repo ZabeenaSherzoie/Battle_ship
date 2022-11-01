@@ -75,3 +75,11 @@ def size(level):
         return 6
     elif level.lower() == 'easy':
         return 4
+def num_ships(level):
+    """Decides how many ships should be in the board according to the game level."""
+    if level.lower() == 'hard':
+        return 8
+    elif level.lower() == 'medium':
+        return 6
+    elif level.lower() == "easy":
+        return 4
