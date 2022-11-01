@@ -93,4 +93,30 @@ def populate_board(board):
         x = random_point(board.size)
         y = random_point(board.size)
     board.add_ship(x, y, board.type)
+def make_guess(board):
+    """Generates two random numbers as a guess if it is computer's turn or will ask the user for guess."""
+    if board.type == 'computer':
+        #A list used for validating x and ys' data
+        n = []
+        for num in range(board.size):
+            n.append(str(num))
+        x = input("guess a row:")
+        #Validates x's input data
+        while x not in n:
+            print(
+                f"Invalid input, please enter a number from 0 to {board.size -1 }")
+            x = input("guess a  row:")
+        y = input("guess a column: ")
+        #Validates y's input data
+        while y not in n:
+            print(
+                f"Invalid input, please enter a number from 0 to {board.size -1 }")
+            y = input("guess a column: ")
+    elif board.type == 'player':
+        x = random_point(board.size)
+        y = random_point(board.size)
+    #Passes the coordinates to the Board's guess function
+    guess = board.guess(int(x), int(y))
+    #Returnes the status of the guessed coordinate
+    return guess
 
