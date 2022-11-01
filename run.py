@@ -53,3 +53,16 @@ class Board:
 def random_point(size):
     """Generates a random number used for computer guesses."""
     return random.randint(0, size - 1)
+
+def level_input_validation():
+    """Validates the input recived from the user for level selection."""
+    print('Select the game level you want to play:\n')
+    #Takes an input from the user to set the level of the game
+    print('      Easy     Medium     Hard\n')
+    level = input(">")
+    #Validating the user input
+    while level.lower() != 'hard' and level.lower() != "easy" and level.lower() != 'medium':
+        print("Invalid input, please select from one of the provided levels")
+        print('      Easy     Medium     Hard')
+        level = input('>')
+    return level
