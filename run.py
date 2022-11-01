@@ -216,3 +216,5 @@ def new_game():
         populate_board(player_board)
         populate_board(computer_board)
     play_game(computer_board, player_board)
+
+new_game()
