@@ -1,3 +1,4 @@
+import random
 # Most of this class's code credit is going to the Code Insititute's
 # Portfolio Project 3 Scope
 class Board:
@@ -47,3 +48,8 @@ class Board:
         elif self.type == 'player':
             self.board[x][y] = '@'
             self.ships.append((x, y))
+# This function's code was taken from the Code Institutes's
+#  Portfolio Project 3 Scope video
+def random_point(size):
+    """Generates a random number used for computer guesses."""
+    return random.randint(0, size - 1)
