@@ -83,3 +83,14 @@ def num_ships(level):
         return 6
     elif level.lower() == "easy":
         return 4
+def populate_board(board):
+    """Generates two random numbers and uses the add ship function to add ships to the board."""
+    x = random_point(board.size)
+    y = random_point(board.size)
+    #Regenerates two coordinates if the first generated one
+    #is already have been populated
+    while (x, y) in board.ships:
+        x = random_point(board.size)
+        y = random_point(board.size)
+    board.add_ship(x, y, board.type)
+
