@@ -1,4 +1,6 @@
 import random
+
+scores={"computer":0, "player":0}
 # Most of this class's code credit is going to the Code Insititute's
 # Portfolio Project 3 Scope
 class Board:
@@ -120,3 +122,33 @@ def make_guess(board):
     #Returnes the status of the guessed coordinate
     return guess
 
+
+def new_game():
+    """Starts a new game, Sets the board size and number of ships, resets the
+    scores and initialises the boards."""
+    print("-"*35)
+    #prints a welcome message 
+    print("Welcome to the BATTLESHIPS game!!!")
+    print("-"*35)
+    #Getting the player's name 
+    player_name = input("please enter your name:\n")
+    print("-"*35)
+    #Calling the level validation function 
+    valid_level = level_input_validation()
+    Bsize = size(valid_level)
+    ship_num = num_ships(valid_level)
+    print("-"*47)
+    print(
+        f"Level: {valid_level.capitalize()}, Board size: {Bsize}, Number of ships: {ship_num}")
+    print("-"*47)
+    scores["computer"] = 0
+    scores['player'] = 0
+    #Creating to instances of the Board class
+    computer_board = Board(Bsize, ship_num, "Computer", type="computer")
+    player_board = Board(Bsize, ship_num, player_name, type="player")
+    #Populating the board with the ships in range of number
+    #of the ships
+    for _ in range(ship_num):
+        populate_board(player_board)
+        populate_board(computer_board)
+    
