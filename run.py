@@ -2,6 +2,7 @@
 import random
 
 
+#  Keep track of the score
 scores = {"computer": 0, "player": 0}
 # Most of this class's code credit is going to the Code Insititute's
 # Portfolio Project 3 Scope
