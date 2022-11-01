@@ -54,7 +54,7 @@ class Board:
         if board.type == 'computer':
             self.ships.append((x, y))
         elif board.type == 'player':
-            self.board[x][y] = '@'
+            self.board[x][y] = '#'
             self.ships.append((x, y))
 # This function's code was taken from the Code Institutes's
 #  Portfolio Project 3 Scope video
@@ -122,6 +122,7 @@ def make_guess(board):
         n = []
         for num in range(board.size):
             n.append(str(num))
+        print()
         x = input("guess a row:")
         # Validates x's input data
         while x not in n:
@@ -163,6 +164,7 @@ def play_game(computer_board, player_board):
     # Prints blank initial boardes with no guess coordinates marked
     print(f"{player_board.name.capitalize()}'s Board: ")
     player_board.print()
+    print()
     print("Computer's Board: ")
     computer_board.print()
     play = 'yes'
@@ -172,6 +174,7 @@ def play_game(computer_board, player_board):
         c = validate_coordinate(player_board, make_guess(player_board))
         print(f"{player_board.name.capitalize()}'s Board: ")
         player_board.print()
+        print()
         print("Computer's Board: ")
         computer_board.print()
         print("-"*35)
@@ -212,9 +215,11 @@ def play_game(computer_board, player_board):
         print(f"Computer's score:{scores['computer']}")
         print(f"{player_board.name.capitalize()}'s score:{scores['player']}")
     else:
+        print()
         print("You Quited the game...")
         print(f"Computer's score:{scores['computer']}")
         print(f"{player_board.name.capitalize()}'s score:{scores['player']}")
+        print("Click the run program if you want to start a new game!!")
 
 
 # Most of this function's code credit is going
@@ -235,7 +240,7 @@ def new_game():
     num_ship = num_ships_b(valid_level)
     print("-"*47)
     print(
-        f"Level: {valid_level},Board: {b_size} Num of ships: {num_ship}")
+        f"Level:{valid_level}, {b_size}X{b_size} , Num of ships:{num_ship} ")
     print("-"*47)
     scores["computer"] = 0
     scores['player'] = 0
