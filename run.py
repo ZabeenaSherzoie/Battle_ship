@@ -1,4 +1,6 @@
+"""Imports random module"""
 import random
+
 
 scores = {"computer": 0, "player": 0}
 # Most of this class's code credit is going to the Code Insititute's
@@ -12,11 +14,11 @@ class Board:
     Has methods for adding ships and guesses and printing the board.
     """
 
-    def __init__(self, size, num_ships, name, type):
+    def __init__(self, size, num_ships, name, typee):
         self.size = size
         self.num_ships = num_ships
         self.name = name
-        self.type = type
+        self.type = typee
         self.board = [['.' for x in range(size)]for y in range(size)]
         self.guesses = []
         self.ships = []
@@ -45,12 +47,12 @@ class Board:
         else:
             return "Miss", (x, y)
 
-    def add_ship(self, x, y, type):
+    def add_ship(self, x, y, board):
         """Adds randomly generated ships to player board or
         appends it coordinates to the computer boards ships list."""
-        if type == 'computer':
+        if board.type == 'computer':
             self.ships.append((x, y))
-        elif self.type == 'player':
+        elif board.type == 'player':
             self.board[x][y] = '@'
             self.ships.append((x, y))
 # This function's code was taken from the Code Institutes's
@@ -67,16 +69,16 @@ def level_input_validation():
     print('Select the game level you want to play:\n')
     # Takes an input from the user to set the level of the game
     print('      Easy     Medium     Hard\n')
-    level = input(">")
+    level = input(">").lower()
     # Validating the user input
-    while level.lower() != 'hard' and level.lower() != "easy" and level.lower() != 'medium':
+    while (level != 'hard' and level != "easy" and level != 'medium'):
         print("Invalid input, please select from one of the provided levels")
         print('      Easy     Medium     Hard')
         level = input('>')
     return level
 
 
-def size(level):
+def size_b(level):
     """Returns the size of the board according to the game level."""
     # Decides the size of the board according to game level
     if level.lower() == "hard":
@@ -87,8 +89,9 @@ def size(level):
         return 4
 
 
-def num_ships(level):
-    """Decides how many ships should be in the board according to the game level."""
+def num_ships_b(level):
+    """Decides how many ships should be in the board
+     according to the game level."""
     if level.lower() == 'hard':
         return 8
     elif level.lower() == 'medium':
@@ -98,7 +101,8 @@ def num_ships(level):
 
 
 def populate_board(board):
-    """Generates two random numbers and uses the add ship function to add ships to the board."""
+    """Generates two random numbers and uses the add ship function
+     to add ships to the board."""
     x = random_point(board.size)
     y = random_point(board.size)
     # Regenerates two coordinates if the first generated one
@@ -106,11 +110,12 @@ def populate_board(board):
     while (x, y) in board.ships:
         x = random_point(board.size)
         y = random_point(board.size)
-    board.add_ship(x, y, board.type)
+    board.add_ship(x, y, board)
 
 
 def make_guess(board):
-    """Generates two random numbers as a guess if it is computer's turn or will ask the user for guess."""
+    """Generates two random numbers as a guess if it is computer's
+     turn or will ask the user for guess."""
     if board.type == 'computer':
         # A list used for validating x and ys' data
         n = []
@@ -120,27 +125,34 @@ def make_guess(board):
         # Validates x's input data
         while x not in n:
             print(
-                f"Invalid input, please enter a number from 0 to {board.size -1 }")
+                f"Please enter a number from 0 to {board.size -1 }")
             x = input("guess a  row:")
         y = input("guess a column: ")
         # Validates y's input data
         while y not in n:
             print(
-                f"Invalid input, please enter a number from 0 to {board.size -1 }")
+                f"Please enter a number from 0 to {board.size -1 }")
             y = input("guess a column: ")
     elif board.type == 'player':
         x = random_point(board.size)
         y = random_point(board.size)
-    coordinate = (x,y)
-    if coordinate in board.guesses:
-        return "duplicate"
+    coordinate = (int(x), int(y))
+    return coordinate
+
+
+def validate_coordinate(board, coordinates):
+    """Validates the coordinates to prevent duplicate entries"""
+    if coordinates in board.guesses:
+        print('You have already guessed that spot')
+        print('Please enter different coordinates!')
+        make_guess(board)
+        return coordinates
     else:
-        guess = board.guess(int(x), int(y))
+        # Passes the coordinates to the Board's guess function
+        guess = board.guess(coordinates[0], coordinates[1])
+        print(guess)
+        # Returnes the status of the guessed coordinate
         return guess
-    # Passes the coordinates to the Board's guess function
-    # guess = board.guess(int(x), int(y))
-    # # Returnes the status of the guessed coordinate
-    # return guess
 
 
 def play_game(computer_board, player_board):
@@ -155,12 +167,8 @@ def play_game(computer_board, player_board):
     play = 'yes'
     # Continues the game until the user wants to quit
     while play.lower() != 'n':
-        c = make_guess(player_board)
-        p = make_guess(computer_board)
-        if c=='duplicate' or p == "duplicate":
-            print("You have guessed that")
-            c = make_guess(player_board)
-            p = make_guess(computer_board)
+        p = validate_coordinate(computer_board, make_guess(computer_board))
+        c = validate_coordinate(player_board, make_guess(player_board))
         print(f"{player_board.name.capitalize()}'s Board: ")
         player_board.print()
         print("Computer's Board: ")
@@ -181,34 +189,35 @@ def play_game(computer_board, player_board):
         elif c[0] == "Hit":
             scores['computer'] += 1
         # prints scores after each round
-        print(
-            f"Computer's score:{scores['computer']}, {player_board.name.capitalize()}'s score:{scores['player']}")
+        print(f"Computer's score:{scores['computer']}")
+        print(f"{player_board.name.capitalize()}'s score:{scores['player']}")
         print("-"*35)
         # Checks whether one of the players have found all the
         # ships or not
-        if scores["player"] == player_board.num_ships or scores['computer'] == computer_board.num_ships:
+        n_s = player_board.num_ships
+        if scores["player"] == n_s or scores['computer'] == n_s:
             break
         else:
             print('Do you want to continue?')
             print("Press any key to continue or N to quit")
             play = input('')
-        # Decides about the winner of the game
+    # Decides about the winner of the game
     if scores['computer'] == computer_board.num_ships:
         print("The winner is computer!!!")
-        print(
-            f"Computer's score:{scores['computer']}, {player_board.name.capitalize()}'s score:{scores['player']}")
+        print(f"Computer's score:{scores['computer']}")
+        print(f"{player_board.name.capitalize()}'s score:{scores['player']}")
     elif scores['player'] == player_board.num_ships:
         print(f"The winner is  {player_board.name.capitalize()}!!!")
-        print(
-            f"Computer's score:{scores['computer']}, {player_board.name.capitalize()}'s score:{scores['player']}")
+        print(f"Computer's score:{scores['computer']}")
+        print(f"{player_board.name.capitalize()}'s score:{scores['player']}")
     else:
         print("You Quited the game...")
-        print(
-            f"Here are the scores, Computer's score:{scores['computer']}, {player_board.name.capitalize()}'s score:{scores['player']}")
+        print(f"Computer's score:{scores['computer']}")
+        print(f"{player_board.name.capitalize()}'s score:{scores['player']}")
+
+
 # Most of this function's code credit is going
 #  to the Code Insititute's Portfolio Project 3 Scope
-
-
 def new_game():
     """Starts a new game, Sets the board size and number of ships, resets the
     scores and initialises the boards."""
@@ -220,21 +229,21 @@ def new_game():
     player_name = input("please enter your name:\n")
     print("-"*35)
     # Calling the level validation function
-    valid_level = level_input_validation()
-    Bsize = size(valid_level)
-    ship_num = num_ships(valid_level)
+    valid_level = level_input_validation().capitalize()
+    b_size = size_b(valid_level)
+    num_ship = num_ships_b(valid_level)
     print("-"*47)
     print(
-        f"Level: {valid_level.capitalize()}, Board size: {Bsize}, Number of ships: {ship_num}")
+        f"Level: {valid_level},Board: {b_size} Num of ships: {num_ship}")
     print("-"*47)
     scores["computer"] = 0
     scores['player'] = 0
     # Creating to instances of the Board class
-    computer_board = Board(Bsize, ship_num, "Computer", type="computer")
-    player_board = Board(Bsize, ship_num, player_name, type="player")
+    computer_board = Board(b_size, num_ship, "Computer", typee="computer")
+    player_board = Board(b_size, num_ship, player_name, typee="player")
     # Populating the board with the ships in range of number
     # of the ships
-    for _ in range(ship_num):
+    for _ in range(num_ship):
         populate_board(player_board)
         populate_board(computer_board)
     play_game(computer_board, player_board)
