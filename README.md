@@ -18,16 +18,14 @@ The winner is the player who sinks all of their opponent's battleships first.
 * ### Random board generation
     * Ships are randomly placed on both the player and computer boards
     * The player cannot see where the computer's ships are
+    ![Game Boards](assets/images/boards.png)
 * ### Play against the computer
 * ### Accepts user input
 * ### Keep track of scores
-![Game Boards](assets/images/boards.png)
-* ### 
-
-* ### Puzzles
-   * Asking the player to solve puzzles at certain points in the game makes it a bit more interesting and challenging than a standard text based story game.
-
 ![Scores management](assets/images/scores.png)
+
+
+
 
 * ### Input Validation and Error Checking
     * You cannot input any other word in place of level
