@@ -66,3 +66,12 @@ def level_input_validation():
         print('      Easy     Medium     Hard')
         level = input('>')
     return level
+def size(level):
+    """Returns the size of the board according to the game level."""
+    #Decides the size of the board according to game level
+    if level.lower() == "hard":
+        return 8
+    elif level.lower() == "medium":
+        return 6
+    elif level.lower() == 'easy':
+        return 4
