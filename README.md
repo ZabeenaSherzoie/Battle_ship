@@ -47,6 +47,8 @@ The class has also methods to help play game, such as a print method to print ou
 * Given invalid inputs: strings when numbers are excepted, out of bounds inputs, same input twice
 * Tested in my local terminal and the Code institute Heroku terminal.
 
+### Bugs Fixing
+I faced problems validating the coordinates that have been added once, with some help form Tutor team I finally could solve the problem.
 
 ### Validator Testing
 * Haven't validate it in  [PEP8 online check.](http://pep8online.com/) Cause I couldn't figure out how the website works.
@@ -66,7 +68,12 @@ The project was deployed using the Code Institute mock terminal for Heroku. The 
 * Search for and select the correct GitHub repository.
 * Select either automatic of manual deployment.
 
-
+## Technologies used:
+* Gitod
+* Heroku: To deploy the page
+* Github
+* VSCode Insiders: To write code locally on my computer
+* Am I Responsive website
 ## Credits
 
 * Code Institute provided the template for the deployment terminal.
